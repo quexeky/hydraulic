@@ -1,5 +1,8 @@
-pub trait Algorithm {}
-pub struct Encoder<T: Algorithm> {
-    encoder: T,
-    data:
+mod write;
+mod read;
+
+use std::io::BufRead;
+
+pub struct AlgorithmMeta {
+
 }
