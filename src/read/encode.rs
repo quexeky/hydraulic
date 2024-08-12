@@ -1,9 +1,9 @@
-use std::io::{Read};
+use std::io::{BufReader};
 use crate::AlgorithmMeta;
-use crate::read::types::ReadAlgorithm;
+use crate::algorithms::Algorithm;
 
-pub struct ReadEncoder<T: ReadAlgorithm> {
+pub struct ReadEncoder<T: Algorithm> {
     meta: AlgorithmMeta,
     encoder: T,
-    data: Box<dyn Read>
+    data: BufReader<Vec<u8>>
 }

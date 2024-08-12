@@ -1,8 +1,8 @@
 use std::io::{Write};
 use crate::AlgorithmMeta;
-use crate::write::types::WriteAlgorithm;
+use crate::algorithms::Algorithm;
 
-pub struct WriteEncoder<T: WriteAlgorithm> {
+pub struct WriteEncoder<T: Algorithm> {
     meta: AlgorithmMeta,
     encoder: T,
     data: Box<dyn Write>

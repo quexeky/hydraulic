@@ -1,8 +1,8 @@
 use std::io::{Read};
 use crate::AlgorithmMeta;
-use crate::read::types::ReadAlgorithm;
+use crate::algorithms::Algorithm;
 
-pub struct ReadDecoder<T: ReadAlgorithm> {
+pub struct ReadDecoder<T: Algorithm> {
     meta: AlgorithmMeta,
     encoder: T,
     data: Box<dyn Read>
