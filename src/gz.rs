@@ -2,6 +2,7 @@ use miniz_oxide::{deflate, deflate::compress_to_vec, inflate::decompress_to_vec}
 use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
 use crate::errors::decompression_error::DecompressionError;
+use flate2::read::GzEncoder;
 pub struct Gzip {
 
 }
@@ -20,7 +21,7 @@ impl Algorithm for Gzip {
     }
 
     fn partial_encode(&self, data: &[u8]) -> Result<Vec<u8>, CompressionError> {
-        todo!()
+        GzEncoder::read
     }
 
     fn partial_decode(&self, data: &[u8]) -> Result<Vec<u8>, DecompressionError> {
