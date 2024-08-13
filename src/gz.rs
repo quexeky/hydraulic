@@ -1,4 +1,4 @@
-use miniz_oxide::{deflate::compress_to_vec, inflate::decompress_to_vec};
+use miniz_oxide::{deflate, deflate::compress_to_vec, inflate::decompress_to_vec};
 use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
 use crate::errors::decompression_error::DecompressionError;
@@ -17,5 +17,13 @@ impl Algorithm for Gzip {
             Ok(o) => Ok(o),
             Err(e) => { println!("{}", e); Err(DecompressionError::Generic)}
         }
+    }
+
+    fn partial_encode(&self, data: &[u8]) -> Result<Vec<u8>, CompressionError> {
+        todo!()
+    }
+
+    fn partial_decode(&self, data: &[u8]) -> Result<Vec<u8>, DecompressionError> {
+        todo!()
     }
 }
