@@ -4,14 +4,14 @@ use crate::AlgorithmMeta;
 use std::io::BufWriter;
 use crate::algorithms::Algorithm;
 
-pub struct WriteDecoder<T: Algorithm> {
+pub struct WriteDecoder<'a, T: Algorithm> {
     meta: AlgorithmMeta,
-    encoder: T,
+    encoder: &'a T,
     data: BufWriter<Vec<u8>>
 }
 
-impl<T: Algorithm> WriteDecoder<T> {
-    pub fn new(alg: T) -> Self {
+impl<'a, T: Algorithm> WriteDecoder<'a, T> {
+    pub fn new(alg: &'a T) -> Self {
         return Self {
             meta: AlgorithmMeta {},
             encoder: alg,
@@ -35,12 +35,13 @@ impl<T: Algorithm> WriteDecoder<T> {
     }
 
     /// Completes the buffer, decodes the data, and then returns the decompressed data as a result
-    pub fn finish<'a>(self) -> io::Result<&'a [u8]> {
-        let self_data = &self.data;
-        let self_encoder = self.encoder;
+    pub fn finish(self) -> io::Result<Vec<u8>> {
+        let self_data = self.data;
         let data = self_data.buffer();
 
-        let res = self_encoder.decode(data);
-        res
+        let self_encoder = self.encoder;
+
+        let res = self_encoder.decode(data).unwrap();
+        Ok(res)
     }
 }
