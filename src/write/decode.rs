@@ -1,6 +1,6 @@
 use std::io;
 use std::io::Write;
-use crate::AlgorithmMeta;
+use crate::{AlgorithmMeta, CompressionLevel};
 use std::io::BufWriter;
 use crate::algorithms::Algorithm;
 
@@ -13,7 +13,7 @@ pub struct WriteDecoder<'a, T: Algorithm> {
 impl<'a, T: Algorithm> WriteDecoder<'a, T> {
     pub fn new(alg: &'a T) -> Self {
         return Self {
-            meta: AlgorithmMeta {},
+            meta: AlgorithmMeta { level: None },
             encoder: alg,
             data: BufWriter::new(Vec::new()),
         }
@@ -37,7 +37,7 @@ impl<'a, T: Algorithm> WriteDecoder<'a, T> {
     /// Completes the buffer, decodes the data, and then returns the decompressed data as a result
     pub fn finish(self) -> io::Result<Vec<u8>> {
         let self_data = self.data;
-        let data = self_data.buffer();
+        let data = self_data.get_ref();
 
         let self_encoder = self.encoder;
 

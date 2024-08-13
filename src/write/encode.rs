@@ -1,6 +1,6 @@
 use std::io;
 use std::io::{BufWriter, Write};
-use crate::AlgorithmMeta;
+use crate::{AlgorithmMeta, CompressionLevel};
 use crate::algorithms::Algorithm;
 
 pub struct WriteEncoder<'a, T: Algorithm> {
@@ -10,9 +10,9 @@ pub struct WriteEncoder<'a, T: Algorithm> {
 }
 
 impl<'a, T: Algorithm> WriteEncoder<'a, T> {
-    pub fn new(alg: &'a T) -> Self {
+    pub fn new(alg: &'a T, level: CompressionLevel) -> Self {
         return Self {
-            meta: AlgorithmMeta {},
+            meta: AlgorithmMeta { level: Some(level) },
             encoder: alg,
             data: BufWriter::new(Vec::new()),
         }
@@ -36,11 +36,11 @@ impl<'a, T: Algorithm> WriteEncoder<'a, T> {
     /// Completes the buffer, encodes the data, and then returns the decompressed data as a result
     pub fn finish(self) -> io::Result<Vec<u8>> {
         let self_data = self.data;
-        let data = self_data.buffer();
+        let data = self_data.get_ref();
 
         let self_encoder = self.encoder;
 
-        let res = self_encoder.encode(data, 10).unwrap();
+        let res = self_encoder.encode(data, self.meta.level.expect("Invalid compression level").to_integer()).unwrap();
         Ok(res)
     }
 }
