@@ -53,5 +53,4 @@ fn write_write_low() {
     let decompressed = decompressor.finish().unwrap();
 
     assert_eq!(data, &*decompressed)
-
 }
