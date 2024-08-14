@@ -48,7 +48,7 @@ impl<'a, T: Algorithm> WriteDecoder<'a, T> {
     /// Finalises the data that is being written to disk and writes any tail data. Returns to File
     /// object where the compressed data is now stored
     pub fn finish(mut self) -> io::Result<File> {
-        let enc = self.encoder.finalise_encode(&self.meta).unwrap();
+        let enc = self.encoder.finalise_decode(&self.meta).unwrap();
         self.write_all(enc).unwrap();
         self.flush().unwrap();
         Ok(self.destination)

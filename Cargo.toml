@@ -1,0 +1,17 @@
+[package]
+name = "hydraulic"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+flate2 = "1.0.31"
+miniz_oxide = "0.8.0"
+rand = "0.8.5"
+
+[lib]
+name = "hydraulic"
+path = "src/lib.rs"
+
+[[bin]]
+name = "hydraulic"
+path = "src/main.rs"
