@@ -1,44 +1,46 @@
 use std::fs::File;
 use std::io::Read;
 
-use crate::AlgorithmMeta;
 use crate::algorithms::Algorithm;
 use crate::errors::decompression_error::DecompressionError;
+use crate::AlgorithmMeta;
 
-pub struct ReadDecoder<'a, T: Algorithm> {
+pub struct ReadDecoder<'a, T: Algorithm, D: Read> {
     meta: AlgorithmMeta,
-    encoder: &'a T,
-    origin: File
+    algorithm: &'a T,
+    origin: D,
 }
 
-impl<'a, T: Algorithm> ReadDecoder<'a, T> {
-    pub fn new(alg: &'a T) -> Self {
+impl<'a, T: Algorithm, D: Read> ReadDecoder<'a, T, D> {
+    pub fn new(algorithm: &'a T, origin: D) -> Self {
         return Self {
             meta: AlgorithmMeta { level: None },
-            encoder: alg,
-            origin: File::open("hydraulic").unwrap(),
-        }
+            algorithm,
+            origin,
+        };
     }
 
-    /// Attempts to write a buffer and returns how many bytes were written to the writer.
+    /// Attempts to read data of size equal to the buffer. Returns a Vec<u8> of the decompressed
+    /// resulting data
     // TODO: Add in errors
-    pub fn read<const S: usize>(&mut self) -> Result<Vec<u8>, DecompressionError> {
-        let mut buf: [u8; S] = [0; S];
-        self.origin.read_exact(&mut buf).unwrap();
-        return self.encoder.partial_decode(&buf, &self.meta);
+    pub fn read(&mut self, buf: &mut [u8]) -> Result<Vec<u8>, DecompressionError> {
+        self.origin.read_exact(buf).unwrap();
+        return self.algorithm.partial_decode(&buf, &self.meta);
     }
 
-    /// Attempts to read and decompress all remaining data within the origin file
+    /// Attempts to read and decompress all data within the origin until EOF
     pub fn read_all(&mut self) -> Result<Vec<u8>, DecompressionError> {
         let mut buf = Vec::new();
         self.origin.read_to_end(&mut buf).unwrap();
 
-        return self.encoder.partial_decode(&*buf, &self.meta);
+        return self.algorithm.partial_decode(&*buf, &self.meta);
     }
 
-    /// Finalises the data that is being written to disk and writes any tail data. Returns to File
-    /// object where the compressed data is now stored
+    /// Attempts to finalise the data which remains within the buffer. This function makes
+    /// no assumption on how much data remains within the origin
     pub fn finish(mut self) -> Result<Vec<u8>, DecompressionError> {
-        Ok(Vec::from(self.encoder.finalise_decode(&self.meta).unwrap()))
+        Ok(Vec::from(
+            self.algorithm.finalise_decode(&self.meta).unwrap(),
+        ))
     }
 }

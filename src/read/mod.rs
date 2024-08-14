@@ -1,2 +1,2 @@
-mod compress;
-mod decompress;
+pub mod compress;
+pub mod decompress;

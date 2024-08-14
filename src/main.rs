@@ -1,20 +1,22 @@
-use std::fs;
-use hydraulic::CompressionLevel;
 use hydraulic::gz::Gzip;
-use hydraulic::write::decompress::WriteDecoder;
+use hydraulic::read::decompress::ReadDecoder;
 use hydraulic::write::compress::WriteEncoder;
+use hydraulic::write::decompress::WriteDecoder;
+use hydraulic::CompressionLevel;
+use std::fs;
+use std::fs::File;
 
 fn main() {
     let data = fs::read_to_string("foo.txt").unwrap();
     println!("{:?}", data.as_bytes());
-    let mut compressor = WriteEncoder::new(&Gzip {}, CompressionLevel::Low);
+    let dest = File::create_new("hydraulic").unwrap();
+    let mut compressor = WriteEncoder::new(&Gzip {}, dest, CompressionLevel::High);
     compressor.write_all(data.as_bytes()).unwrap();
     compressor.flush().unwrap();
     let finalised = compressor.finish().unwrap();
-    println!("{:?}", finalised);
-    let mut decompressor = WriteDecoder::new(&Gzip {});
-    decompressor.write_all(&*finalised).unwrap();
-    decompressor.flush().unwrap();
-    let decompressed = decompressor.finish().unwrap();
-    println!("{:?}", decompressed);
+
+    let mut decompressor = ReadDecoder::new(&Gzip {}, finalised);
+    let mut data = decompressor.read_all().unwrap();
+    data.append(&mut decompressor.finish().unwrap());
+    println!("{:?}", data);
 }

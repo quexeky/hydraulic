@@ -1,8 +1,8 @@
-use crate::CompressionLevel;
 use crate::gz::Gzip;
 use crate::tests::util::generate_random_bytes;
-use crate::write::decompress::WriteDecoder;
 use crate::write::compress::WriteEncoder;
+use crate::write::decompress::WriteDecoder;
+use crate::CompressionLevel;
 
 #[test]
 fn write_write_high() {
@@ -19,7 +19,6 @@ fn write_write_high() {
     let decompressed = decompressor.finish().unwrap();
 
     assert_eq!(data, &*decompressed)
-
 }
 #[test]
 fn write_write_med() {
@@ -36,7 +35,6 @@ fn write_write_med() {
     let decompressed = decompressor.finish().unwrap();
 
     assert_eq!(data, &*decompressed)
-
 }
 #[test]
 fn write_write_low() {
