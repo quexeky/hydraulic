@@ -1,8 +1,8 @@
 use crate::CompressionLevel;
 use crate::gz::Gzip;
 use crate::tests::util::generate_random_bytes;
-use crate::write::decode::WriteDecoder;
-use crate::write::encode::WriteEncoder;
+use crate::write::decompress::WriteDecoder;
+use crate::write::compress::WriteEncoder;
 
 #[test]
 fn write_write_high() {

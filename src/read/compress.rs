@@ -3,11 +3,11 @@ use crate::{AlgorithmMeta, CompressionLevel};
 use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
 use crate::errors::decompression_error::DecompressionError;
-use crate::read::decode::ReadDecoder;
+use crate::read::decompress::ReadDecoder;
 
 pub struct ReadEncoder<'a, T: Algorithm> {
     meta: AlgorithmMeta,
-    encoder: T,
+    encoder: &T,
     data: &'a [u8]
 }
 

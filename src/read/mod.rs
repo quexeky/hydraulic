@@ -1,2 +1,2 @@
-mod encode;
-mod decode;
+mod compress;
+mod decompress;

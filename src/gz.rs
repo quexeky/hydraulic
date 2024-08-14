@@ -1,27 +1,23 @@
-use miniz_oxide::{deflate, deflate::compress_to_vec, inflate::decompress_to_vec};
+use miniz_oxide::{deflate::compress_to_vec, inflate::decompress_to_vec};
+
 use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
 use crate::errors::decompression_error::DecompressionError;
-use flate2::read::GzEncoder;
+
 pub struct Gzip {
 
 }
 impl Algorithm for Gzip {
-    fn encode(&self, data: &[u8], level: usize) -> Result<Vec<u8>, CompressionError> {
-        let data = compress_to_vec(data, level as u8);
-        return Ok(data);
+    fn finalise_encode(&self, data: &[u8], level: usize) -> Result<&[u8], CompressionError> {
+        todo!()
     }
 
-    fn decode(&self, data: &[u8]) -> Result<Vec<u8>, DecompressionError> {
-        let data = decompress_to_vec(data);
-        return match data {
-            Ok(o) => Ok(o),
-            Err(e) => { println!("{}", e); Err(DecompressionError::Generic)}
-        }
+    fn finalise_decode(&self, data: &[u8]) -> Result<&[u8], DecompressionError> {
+        todo!()
     }
 
     fn partial_encode(&self, data: &[u8]) -> Result<Vec<u8>, CompressionError> {
-        GzEncoder::read
+        todo!()
     }
 
     fn partial_decode(&self, data: &[u8]) -> Result<Vec<u8>, DecompressionError> {

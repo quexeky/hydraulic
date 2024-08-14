@@ -1,2 +1,2 @@
-pub mod encode;
-pub mod decode;
+pub mod compress;
+pub mod decompress;

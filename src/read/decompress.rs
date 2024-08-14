@@ -11,6 +11,7 @@ pub struct ReadDecoder<'a, T: Algorithm> {
 }
 
 impl<'a, T: Algorithm> ReadDecoder<'a, T> {
+    /// Creates a new ReadDecoder which contains a set of data
     pub fn new(alg: &'a T, data: &'a [u8]) -> Self {
 
         return Self {
