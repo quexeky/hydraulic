@@ -1,11 +1,12 @@
-use std::fs::File;
 use std::io;
 use std::io::Write;
 
+use crate::algorithm_meta::AlgorithmMeta;
 use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
-use crate::{AlgorithmMeta, CompressionLevel};
+use crate::CompressionLevel;
 
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct WriteEncoder<'a, T: Algorithm, D: Write> {
     meta: AlgorithmMeta,
     algorithm: &'a T,
@@ -15,12 +16,12 @@ pub struct WriteEncoder<'a, T: Algorithm, D: Write> {
 
 impl<'a, T: Algorithm, D: Write> WriteEncoder<'a, T, D> {
     pub fn new(algorithm: &'a T, destination: D, level: CompressionLevel) -> Self {
-        return Self {
+        Self {
             meta: AlgorithmMeta { level: Some(level) },
             algorithm,
             destination,
             buffer: Vec::new(),
-        };
+        }
     }
 
     /// Attempts to write a buffer and returns how many bytes were written to the writer.

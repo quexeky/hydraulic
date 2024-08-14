@@ -1,10 +1,10 @@
-use std::fs::File;
 use std::io::Read;
 
+use crate::algorithm_meta::AlgorithmMeta;
 use crate::algorithms::Algorithm;
 use crate::errors::decompression_error::DecompressionError;
-use crate::AlgorithmMeta;
 
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct ReadDecoder<'a, T: Algorithm, D: Read> {
     meta: AlgorithmMeta,
     algorithm: &'a T,

@@ -1,6 +1,4 @@
-use crate::AlgorithmMeta;
-use miniz_oxide::{deflate::compress_to_vec, inflate::decompress_to_vec};
-
+use crate::algorithm_meta::AlgorithmMeta;
 use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
 use crate::errors::decompression_error::DecompressionError;

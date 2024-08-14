@@ -1,10 +1,11 @@
+use std::io::Read;
+
+use crate::algorithm_meta::AlgorithmMeta;
 use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
 use crate::errors::decompression_error::DecompressionError;
-use crate::read::decompress::ReadDecoder;
-use crate::{AlgorithmMeta, CompressionLevel};
-use std::io::{BufReader, Read};
 
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct ReadEncoder<'a, T: Algorithm, D: Read> {
     meta: AlgorithmMeta,
     algorithm: &'a T,
@@ -13,11 +14,11 @@ pub struct ReadEncoder<'a, T: Algorithm, D: Read> {
 
 impl<'a, T: Algorithm, D: Read> ReadEncoder<'a, T, D> {
     pub fn new(algorithm: &'a T, origin: D) -> Self {
-        return Self {
+        Self {
             meta: AlgorithmMeta { level: None },
             algorithm,
             origin,
-        };
+        }
     }
 
     /// Attempts to read data of size equal to the buffer. Returns a Vec<u8> of the decompressed
@@ -25,7 +26,7 @@ impl<'a, T: Algorithm, D: Read> ReadEncoder<'a, T, D> {
     // TODO: Add in errors
     pub fn read(&mut self, buf: &mut [u8]) -> Result<Vec<u8>, CompressionError> {
         self.origin.read_exact(buf).unwrap();
-        return self.algorithm.partial_encode(&buf, &self.meta);
+        self.algorithm.partial_encode(&buf, &self.meta)
     }
 
     /// Attempts to read and decompress all data within the origin until EOF

@@ -1,11 +1,11 @@
-use std::fs::File;
 use std::io;
 use std::io::Write;
 
+use crate::algorithm_meta::AlgorithmMeta;
 use crate::algorithms::Algorithm;
 use crate::errors::decompression_error::DecompressionError;
-use crate::AlgorithmMeta;
 
+#[derive(Debug, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct WriteDecoder<'a, T: Algorithm, D: Write> {
     meta: AlgorithmMeta,
     algorithm: &'a T,
@@ -15,12 +15,12 @@ pub struct WriteDecoder<'a, T: Algorithm, D: Write> {
 
 impl<'a, T: Algorithm, D: Write> WriteDecoder<'a, T, D> {
     pub fn new(algorithm: &'a T, destination: D) -> Self {
-        return Self {
+        Self {
             meta: AlgorithmMeta { level: None },
             algorithm,
             destination,
             buffer: Vec::new(),
-        };
+        }
     }
 
     /// Attempts to write a buffer and returns how many bytes were written to the writer.

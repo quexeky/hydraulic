@@ -1,10 +1,8 @@
-use hydraulic::gz::Gzip;
-use hydraulic::read::decompress::ReadDecoder;
-use hydraulic::write::compress::WriteEncoder;
-use hydraulic::write::decompress::WriteDecoder;
-use hydraulic::CompressionLevel;
 use std::fs;
 use std::fs::File;
+use hydraulic::Gzip;
+
+use hydraulic::prelude::*;
 
 fn main() {
     let data = fs::read_to_string("foo.txt").unwrap();
