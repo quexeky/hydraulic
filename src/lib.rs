@@ -8,6 +8,7 @@ mod errors;
 mod gz;
 pub mod read;
 mod write;
+mod deflate;
 
 /// Generic interface to compress data through either a Read or a Write interface
 /// TODO: Example
@@ -41,8 +42,18 @@ pub mod prelude {
 /// Metadata for algorithms to add generic data to. Should not be used to store anything except
 /// data specifically for the algorithm itself
 pub use crate::algorithm_meta::AlgorithmMeta;
-/// The functions required for
+/// Algorithm is the generic type which implements all the functions required for both encoding
+/// and decoding
 pub use crate::algorithms::Algorithm;
+/// General Compression Level implementation for Algorithm.
+/// Low = 2
+/// Med = 6
+/// High = 9
+/// Custom values may also be assigned using the CompressionLevel::Custom(x) enum type
 pub use crate::compression_level::CompressionLevel;
 
+#[cfg(feature = "gzip")]
 pub use crate::gz::Gzip;
+
+#[cfg(feature = "gzip")]
+pub use crate::deflate::Deflate;

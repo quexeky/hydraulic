@@ -5,12 +5,17 @@ edition = "2021"
 
 [dependencies]
 flate2 = "1.0.31"
+inflate = "0.4.5"
 miniz_oxide = "0.8.0"
 rand = "0.8.5"
 
 [lib]
 name = "hydraulic"
 path = "src/lib.rs"
+
+[features]
+gzip = []
+deflate = []
 
 [[bin]]
 name = "hydraulic"
