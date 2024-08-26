@@ -4,6 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+clap = { version = "4.5.16", features = ["derive"] }
+clap-stdin = "0.5.1"
 flate2 = "1.0.31"
 inflate = "0.4.5"
 miniz_oxide = "0.8.0"
@@ -19,4 +21,4 @@ deflate = []
 
 [[bin]]
 name = "hydraulic"
-path = "src/main.rs"
+path = "src/bin/cli/main.rs"
