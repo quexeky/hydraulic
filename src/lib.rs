@@ -38,7 +38,28 @@ pub mod prelude {
     pub use crate::AlgorithmMeta;
     pub use crate::CompressionLevel;
     
-    pub use crate::Gzip;
+    pub use crate::errors::decompression_error::DecompressionError;
+    pub use crate::errors::compression_error::CompressionError;
+}
+
+/// Module specifically for implementation
+/// 
+/// This contains all the necessary traits, structs, and other things to implement your own
+/// compression algorithm
+pub mod implementation {
+    pub use crate::decompress::ReadDecoder;
+    pub use crate::decompress::WriteDecoder;
+
+    pub use crate::compress::ReadEncoder;
+    pub use crate::compress::WriteEncoder;
+
+    pub use crate::AlgorithmMeta;
+    pub use crate::CompressionLevel;
+
+    pub use crate::errors::decompression_error::DecompressionError;
+    pub use crate::errors::compression_error::CompressionError;
+
+    pub use crate::Algorithm;
 }
 /// Metadata for algorithms to add generic data to. Should not be used to store anything except
 /// data specifically for the algorithm itself

@@ -25,6 +25,7 @@ hydraulic = { version = "0.1.0", features = ["full"]}
 
 ### Examples
 A simple compression function using already implemented Gzip compression.
+
 Ensure that the "gzip" feature is enabled
 
 ```toml
@@ -33,6 +34,9 @@ hydraulic = { version = "0.1.0", features = ["gzip"]}
 ```
 Then, in main.rs:
 ```rust
+use std::fs::File;
+use std::io::Read;
+use hydraulic::Gzip;
 use hydraulic::prelude::*;
 
 fn compress(data: &[u8]) -> File {
