@@ -5,6 +5,7 @@ use crate::errors::decompression_error::DecompressionError;
 
 /// UNIMPLEMENTED!
 /// This module provides implementations for the Gzip compression algorithm
+#[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Gzip {}
 impl Gzip {
     pub fn new() -> Self {

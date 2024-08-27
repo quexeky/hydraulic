@@ -37,6 +37,8 @@ pub mod prelude {
 
     pub use crate::AlgorithmMeta;
     pub use crate::CompressionLevel;
+    
+    pub use crate::Gzip;
 }
 /// Metadata for algorithms to add generic data to. Should not be used to store anything except
 /// data specifically for the algorithm itself
