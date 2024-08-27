@@ -1,4 +1,4 @@
-use crate::gz::Gzip;
+use crate::features::gz::Gzip;
 use crate::tests::util::generate_random_bytes;
 use crate::write::compress::WriteEncoder;
 use crate::write::decompress::WriteDecoder;

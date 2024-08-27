@@ -21,4 +21,4 @@ deflate = []
 
 [[bin]]
 name = "hydraulic"
-path = "src/bin/cli/main.rs"
+path = "src/main.rs"

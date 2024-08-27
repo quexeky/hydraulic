@@ -5,10 +5,10 @@ mod algorithm_meta;
 mod algorithms;
 mod compression_level;
 mod errors;
-mod gz;
 pub mod read;
 mod write;
 mod deflate;
+mod features;
 
 /// Generic interface to compress data through either a Read or a Write interface
 /// TODO: Example
@@ -53,7 +53,7 @@ pub use crate::algorithms::Algorithm;
 pub use crate::compression_level::CompressionLevel;
 
 #[cfg(feature = "gzip")]
-pub use crate::gz::Gzip;
+pub use features::gz::Gzip;
 
 #[cfg(feature = "gzip")]
 pub use crate::deflate::Deflate;

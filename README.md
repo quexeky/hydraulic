@@ -1,11 +1,20 @@
 # hydraulic
-A tool for compressing files in chunks through a piped input into a generic compression interface.
-May be extended through use as a library
-
+An interface and implementations of various compression algorithms.
 # Installation 
 ## Binary
-
+> :warning: This feature has not yet been added. See the 
+> [CLI](https://github.com/quexeky/hydraulic/tree/cli) tree for the current status
 
 ## Library
 
 > cargo install hydraulic 
+
+## Example
+
+```rust
+use hydraulic::prelude::*;
+
+fn main() {
+    
+}
+```

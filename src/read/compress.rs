@@ -9,11 +9,11 @@ use crate::errors::decompression_error::DecompressionError;
 pub struct ReadEncoder<'a, T: Algorithm, D: Read> {
     meta: AlgorithmMeta,
     algorithm: &'a T,
-    origin: D,
+    origin: &'a mut D,
 }
 
 impl<'a, T: Algorithm, D: Read> ReadEncoder<'a, T, D> {
-    pub fn new(algorithm: &'a T, origin: D) -> Self {
+    pub fn new(algorithm: &'a T, origin: &'a mut D) -> Self {
         Self {
             meta: AlgorithmMeta { level: None },
             algorithm,
@@ -34,7 +34,7 @@ impl<'a, T: Algorithm, D: Read> ReadEncoder<'a, T, D> {
         let mut buf = Vec::new();
         self.origin.read_to_end(&mut buf).unwrap();
 
-        return self.algorithm.partial_encode(&*buf, &self.meta);
+        self.algorithm.partial_encode(&*buf, &self.meta)
     }
 
     /// Attempts to finalise the data which remains within the buffer. This function makes
