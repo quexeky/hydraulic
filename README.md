@@ -14,7 +14,9 @@ This will be changed in future versions
 
 hydraulic may be installed with the command:
 
-`cargo install hydraulic`
+```
+cargo install hydraulic
+```
 
 Or by adding the following to your Cargo.toml
 
