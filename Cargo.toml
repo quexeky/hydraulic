@@ -18,7 +18,3 @@ path = "src/lib.rs"
 [features]
 gzip = []
 deflate = []
-
-[[bin]]
-name = "hydraulic"
-path = "src/main.rs"

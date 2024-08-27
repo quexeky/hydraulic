@@ -3,8 +3,6 @@ use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
 use crate::errors::decompression_error::DecompressionError;
 
-
-
 pub struct Gzip {}
 impl Algorithm for Gzip {
     fn finalise_encode(&self, meta: &AlgorithmMeta) -> Result<Vec<u8>, CompressionError> {

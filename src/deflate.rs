@@ -1,3 +1,1 @@
-pub struct Deflate {
-    
-}
+pub struct Deflate {}

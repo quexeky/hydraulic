@@ -9,11 +9,11 @@ use crate::errors::decompression_error::DecompressionError;
 pub struct ReadEncoder<'a, T: Algorithm, D: Read> {
     meta: AlgorithmMeta,
     algorithm: &'a T,
-    origin: &'a mut D,
+    pub origin: D,
 }
 
 impl<'a, T: Algorithm, D: Read> ReadEncoder<'a, T, D> {
-    pub fn new(algorithm: &'a T, origin: &'a mut D) -> Self {
+    pub fn new(algorithm: &'a T, origin: D) -> Self {
         Self {
             meta: AlgorithmMeta { level: None },
             algorithm,
@@ -39,7 +39,7 @@ impl<'a, T: Algorithm, D: Read> ReadEncoder<'a, T, D> {
 
     /// Attempts to finalise the data which remains within the buffer. This function makes
     /// no assumption on how much data remains within the origin
-    pub fn finish(mut self) -> Result<Vec<u8>, DecompressionError> {
+    pub fn finish(self) -> Result<Vec<u8>, DecompressionError> {
         Ok(Vec::from(
             self.algorithm.finalise_encode(&self.meta).unwrap(),
         ))

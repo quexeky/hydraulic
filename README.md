@@ -14,7 +14,18 @@ An interface and implementations of various compression algorithms.
 ```rust
 use hydraulic::prelude::*;
 
-fn main() {
+fn compress(data: &[u8]) {
+    // Create a new compressor which writes data to "foo.txt"
+    let mut compressor = WriteEncoder::new(&Gzip {}, File::create("foo.txt").unwrap(), CompressionLevel::High);
     
+    // Write "data" to the buffer
+    compressor.write_all(&data).unwrap();
+    
+    // Compress and write the buffer to "foo.txt"
+    compressor.flush().unwrap();
+    
+    // Finalises the compression and returns the file
+    let finalised = compressor.finish().unwrap();
+
 }
 ```

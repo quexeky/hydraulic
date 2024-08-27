@@ -4,11 +4,11 @@ mod tests;
 mod algorithm_meta;
 mod algorithms;
 mod compression_level;
+mod deflate;
 mod errors;
+mod features;
 pub mod read;
 mod write;
-mod deflate;
-mod features;
 
 /// Generic interface to compress data through either a Read or a Write interface
 /// TODO: Example
