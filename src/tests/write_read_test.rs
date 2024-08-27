@@ -1,21 +1,24 @@
-use std::fs::File;
 use crate::features::gz::Gzip;
+use crate::prelude::ReadDecoder;
 use crate::tests::util::generate_random_bytes;
 use crate::write::compress::WriteEncoder;
-use crate::write::decompress::WriteDecoder;
 use crate::CompressionLevel;
-use crate::prelude::ReadDecoder;
+use std::fs::File;
 
 #[test]
 fn write_read_high() {
     let data = generate_random_bytes();
+    
+    let alg = Gzip::new();
 
-    let mut compressor = WriteEncoder::new(&Gzip {}, File::create("foo.txt").unwrap(), CompressionLevel::High);
-    compressor.write_all(&data).unwrap();
+    let mut compressor = WriteEncoder::new(&alg, File::create("foo.txt").unwrap(), CompressionLevel::High);
+    compressor.queue(&data);
     compressor.write().unwrap();
     let finalised = compressor.finish().unwrap();
+    
+    let alg = Gzip::new();
 
-    let mut decompressor = ReadDecoder::new(&Gzip {}, finalised);
+    let mut decompressor = ReadDecoder::new(&alg, finalised);
     decompressor.read_all().unwrap();
     let decompressed = decompressor.finish().unwrap();
 
@@ -24,13 +27,17 @@ fn write_read_high() {
 #[test]
 fn write_read_med() {
     let data = generate_random_bytes();
+    
+    let alg = Gzip::new();
 
-    let mut compressor = WriteEncoder::new(&Gzip {}, File::create("foo.txt").unwrap(), CompressionLevel::Med);
-    compressor.write_all(&data).unwrap();
+    let mut compressor = WriteEncoder::new(&alg, File::create("foo.txt").unwrap(), CompressionLevel::Med);
+    compressor.queue(&data);
     compressor.write().unwrap();
     let finalised = compressor.finish().unwrap();
 
-    let mut decompressor = ReadDecoder::new(&Gzip {}, finalised);
+    let alg = Gzip::new();
+
+    let mut decompressor = ReadDecoder::new(&alg, finalised);
     decompressor.read_all().unwrap();
     let decompressed = decompressor.finish().unwrap();
 
@@ -40,12 +47,16 @@ fn write_read_med() {
 fn write_read_low() {
     let data = generate_random_bytes();
 
-    let mut compressor = WriteEncoder::new(&Gzip {}, File::create("foo.txt").unwrap(), CompressionLevel::Low);
-    compressor.write_all(&data).unwrap();
+    let alg = Gzip::new();
+    
+    let mut compressor = WriteEncoder::new(&alg, File::create("foo.txt").unwrap(), CompressionLevel::Low);
+    compressor.queue(&data);
     compressor.write().unwrap();
     let finalised = compressor.finish().unwrap();
 
-    let mut decompressor = ReadDecoder::new(&Gzip {}, finalised);
+    let alg = Gzip::new();
+
+    let mut decompressor = ReadDecoder::new(&alg, finalised);
     decompressor.read_all().unwrap();
     let decompressed = decompressor.finish().unwrap();
 

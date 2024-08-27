@@ -4,7 +4,6 @@ mod tests;
 mod algorithm_meta;
 mod algorithms;
 mod compression_level;
-mod deflate;
 mod errors;
 mod features;
 pub mod read;
@@ -52,8 +51,16 @@ pub use crate::algorithms::Algorithm;
 /// Custom values may also be assigned using the CompressionLevel::Custom(x) enum type
 pub use crate::compression_level::CompressionLevel;
 
-#[cfg(feature = "gzip")]
+// Features
+
+#[cfg(any(
+    feature = "full",
+    feature = "gzip"
+))]
 pub use features::gz::Gzip;
 
-#[cfg(feature = "gzip")]
-pub use crate::deflate::Deflate;
+#[cfg(any(
+    feature = "full",
+    feature = "deflate"
+))]pub use features::deflate::Deflate;
+

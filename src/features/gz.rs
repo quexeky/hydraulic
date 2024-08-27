@@ -3,7 +3,14 @@ use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
 use crate::errors::decompression_error::DecompressionError;
 
+/// UNIMPLEMENTED!
+/// This module provides implementations for the Gzip compression algorithm
 pub struct Gzip {}
+impl Gzip {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
 impl Algorithm for Gzip {
     fn finalise_encode(&self, meta: &AlgorithmMeta) -> Result<Vec<u8>, CompressionError> {
         todo!()

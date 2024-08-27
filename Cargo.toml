@@ -16,5 +16,6 @@ name = "hydraulic"
 path = "src/lib.rs"
 
 [features]
+full = []
 gzip = []
 deflate = []
