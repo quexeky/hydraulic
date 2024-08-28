@@ -20,4 +20,5 @@ fn main() {
     let mut data = decompressor.read_all().unwrap();
     data.append(&mut decompressor.finish().unwrap());
     println!("{:?}", data);
+    
 }
