@@ -1,12 +1,12 @@
 # hydraulic
 [![Crates.io][crates-badge]][crates-url]
-[![MIT licensed][mit-badge]][mit-url]
+[![GPL 3.0 licensed][gpl-badge]][gpl-url]
 [![GitHub][github-stars]][github-url]
 
 [crates-badge]: https://img.shields.io/crates/v/hydraulic.svg
 [crates-url]: https://crates.io/crates/hydraulic
-[mit-badge]: https://img.shields.io/badge/license-GPL_3.0-blue.svg
-[mit-url]: https://github.com/quexeky/hydraulic/blob/master/LICENSE
+[gpl-badge]: https://img.shields.io/badge/license-GPL_3.0-blue.svg
+[gpl-url]: https://github.com/quexeky/hydraulic/blob/master/LICENSE
 [github-stars]: https://img.shields.io/github/stars/quexeky/hydraulic
 [github-url]: https://github.com/quexeky/hydraulic
 An interface and implementations of various compression algorithms. 

@@ -6,6 +6,8 @@ description = "An interface for generic compression library usage with a collect
 license = "GPL-3.0"
 
 [dependencies]
+clap = { version = "4.5.16", optional = true, features = ["derive"] }
+clap-stdin = { version = "0.5.1", optional = true}
 
 [dev-dependencies]
 rand = "0.8.5"
@@ -14,7 +16,15 @@ rand = "0.8.5"
 name = "hydraulic"
 path = "src/lib.rs"
 
+[[bin]]
+name = "hydraulic"
+path = "src/main.rs"
+required-features = ["build-binary"]
+
+
+
 [features]
 full = []
 gzip = []
 deflate = []
+build-binary = ["clap", "clap-stdin"]
