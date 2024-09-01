@@ -1,19 +1,31 @@
-use clap::{Parser, Subcommand};
-use clap_stdin::FileOrStdin;
+use clap::{Args, Parser, Subcommand, ValueEnum};
+use clap_stdin::{FileOrStdin, MaybeStdin};
 
 #[derive(Parser, Debug, Clone)]
 #[command(version, about, long_about)]
-pub struct Args {
-    #[command(subcommand)]
-    /// Compression algorithm
-    algorithm: Algorithm,
+pub struct Cli {
+    #[arg(value_enum)]
+    ///// Compression algorithm
+    pub (crate) algorithm: Algorithm,
     
     /// Data to pass into the compressor
-    data: FileOrStdin,
+    pub (crate) data: FileOrStdin,
+
+    #[arg(value_enum)]
+    ///// Read or Write
+    pub (crate) read_write: ReadWrite,
+
+    /// Size (in bytes) at which data is sent through the compressor
+    pub (crate) rate: u64,
+
+}
+#[derive(ValueEnum, Debug, Clone)]
+pub enum ReadWrite {
+    Read,
+    Write
 }
 
-#[derive(Subcommand, Debug, Clone)]
-#[command(version, about, long_about)]
+#[derive(ValueEnum, Debug, Clone)]
 enum Algorithm {
     #[cfg(any(feature = "gzip", feature = "full"))]
     Gz,
