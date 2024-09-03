@@ -54,13 +54,13 @@ use hydraulic::prelude::*;
 fn compress(data: &[u8]) -> File {
 
     let alg = Gzip::new();
-    // Create a new compressor which writes data to "foo.txt"
-    let mut compressor = WriteEncoder::new(&alg, File::create("foo.txt").unwrap(), CompressionLevel::High);
+    // Create a new compressor which writes data to "foo.tar.gz.txt"
+    let mut compressor = WriteEncoder::new(&alg, File::create("foo.tar.gz.txt").unwrap(), CompressionLevel::High);
 
     // Send "data" to the buffer
     compressor.queue(&data);
 
-    // Compress and write the buffer to "foo.txt"
+    // Compress and write the buffer to "foo.tar.gz.txt"
     compressor.write().unwrap();
 
     // Finalises the compression and returns the file where data is written

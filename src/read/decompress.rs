@@ -39,6 +39,8 @@ impl<'a, T: Algorithm, D: Read> ReadDecoder<'a, T, D> {
     /// Attempts to finalise the data which remains within the buffer. This function makes
     /// no assumption on how much data remains within the origin
     pub fn finish(mut self) -> Result<Vec<u8>, DecompressionError> {
+        let data = self.algorithm.finalise_decode(&self.meta);
+        println!("Data: {:?}", data?);
         Ok(Vec::from(
             self.algorithm.finalise_decode(&self.meta)?,
         ))

@@ -6,6 +6,8 @@ description = "An interface for generic compression library usage with a collect
 license = "GPL-3.0"
 
 [dependencies]
+flate2 = "1.0.33"
+miniz_oxide = "0.8.0"
 
 [dev-dependencies]
 rand = "0.8.5"

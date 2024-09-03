@@ -3,6 +3,8 @@ use crate::algorithms::Algorithm;
 use crate::errors::compression_error::CompressionError;
 use crate::errors::decompression_error::DecompressionError;
 
+use miniz_oxide::{deflate, inflate};
+
 /// UNIMPLEMENTED!
 /// This module provides implementations for the Gzip compression algorithm
 #[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
@@ -14,11 +16,11 @@ impl Gzip {
 }
 impl Algorithm for Gzip {
     fn finalise_encode(&self, meta: &AlgorithmMeta) -> Result<Vec<u8>, CompressionError> {
-        todo!()
+        Ok(vec![])
     }
 
     fn finalise_decode(&self, meta: &AlgorithmMeta) -> Result<Vec<u8>, DecompressionError> {
-        todo!()
+        Ok(vec![])
     }
 
     fn partial_encode(
@@ -26,7 +28,8 @@ impl Algorithm for Gzip {
         data: &[u8],
         meta: &AlgorithmMeta,
     ) -> Result<Vec<u8>, CompressionError> {
-        todo!()
+        let res = deflate::compress_to_vec(data, meta.level.unwrap().to_integer() as u8);
+        Ok(res)
     }
 
     fn partial_decode(
@@ -34,6 +37,8 @@ impl Algorithm for Gzip {
         data: &[u8],
         meta: &AlgorithmMeta,
     ) -> Result<Vec<u8>, DecompressionError> {
-        todo!()
+        let res = inflate::decompress_to_vec(data);
+        println!("Partial Decode res: {:?}", res);
+        Ok(res.unwrap())
     }
 }

@@ -10,10 +10,12 @@ impl Gzip {
 impl Algorithm for Gzip {
     fn finalise_encode(&self, meta: &AlgorithmMeta) -> Result<Vec<u8>, CompressionError> {
         // Final encoding steps go here
+        todo!()
     }
 
     fn finalise_decode(&self, meta: &AlgorithmMeta) -> Result<Vec<u8>, DecompressionError> {
         // Final decoding steps go here
+        todo!()
     }
 
     fn partial_encode(
@@ -22,6 +24,7 @@ impl Algorithm for Gzip {
         meta: &AlgorithmMeta,
     ) -> Result<Vec<u8>, CompressionError> {
         // Implement your decompression of a single data block here
+        todo!()
     }
 
     fn partial_decode(
@@ -30,5 +33,10 @@ impl Algorithm for Gzip {
         meta: &AlgorithmMeta,
     ) -> Result<Vec<u8>, DecompressionError> {
         // Implement your compression of a single data block here
+        todo!()
     }
+}
+
+fn main() {
+
 }
