@@ -25,7 +25,7 @@ impl<'a, T: Algorithm, D: Read> ReadDecoder<'a, T, D> {
     // TODO: Add in errors
     pub fn read(&mut self, buf: &mut [u8]) -> Result<Vec<u8>, DecompressionError> {
         self.origin.read_exact(buf).unwrap();
-        self.algorithm.partial_decode(&buf, &self.meta)
+        self.algorithm.partial_decode(buf, &self.meta)
     }
 
     /// Attempts to read and decompress all data within the origin until EOF
@@ -33,16 +33,14 @@ impl<'a, T: Algorithm, D: Read> ReadDecoder<'a, T, D> {
         let mut buf = Vec::new();
         self.origin.read_to_end(&mut buf).unwrap();
 
-        self.algorithm.partial_decode(&*buf, &self.meta)
+        self.algorithm.partial_decode(&buf, &self.meta)
     }
 
     /// Attempts to finalise the data which remains within the buffer. This function makes
     /// no assumption on how much data remains within the origin
-    pub fn finish(mut self) -> Result<Vec<u8>, DecompressionError> {
+    pub fn finish(self) -> Result<Vec<u8>, DecompressionError> {
         let data = self.algorithm.finalise_decode(&self.meta);
         println!("Data: {:?}", data?);
-        Ok(Vec::from(
-            self.algorithm.finalise_decode(&self.meta)?,
-        ))
+        self.algorithm.finalise_decode(&self.meta)
     }
 }
