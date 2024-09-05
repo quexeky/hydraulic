@@ -33,9 +33,9 @@ impl<'a, T: Algorithm, D: Write> WriteDecoder<'a, T, D> {
     pub fn write(&mut self) -> io::Result<()> {
         let data = self
             .algorithm
-            .partial_decode(&*self.buffer, &self.meta)
+            .partial_decode(&self.buffer, &self.meta)
             .unwrap();
-        self.destination.write_all(&*data)?;
+        self.destination.write_all(&data)?;
         self.buffer.clear();
         Ok(())
     }
@@ -44,7 +44,7 @@ impl<'a, T: Algorithm, D: Write> WriteDecoder<'a, T, D> {
     /// object where the compressed data is now stored
     pub fn finish(mut self) -> Result<D, DecompressionError> {
         let enc = self.algorithm.finalise_decode(&self.meta)?;
-        self.queue(&*enc);
+        self.queue(&enc);
         self.write().unwrap();
         Ok(self.destination)
     }

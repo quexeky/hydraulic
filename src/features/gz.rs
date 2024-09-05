@@ -9,17 +9,13 @@ use miniz_oxide::{deflate, inflate};
 /// This module provides implementations for the Gzip compression algorithm
 #[derive(Default, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq)]
 pub struct Gzip {}
-impl Gzip {
-    pub fn new() -> Self {
-        Self {}
-    }
-}
+impl Gzip {}
 impl Algorithm for Gzip {
-    fn finalise_encode(&self, meta: &AlgorithmMeta) -> Result<Vec<u8>, CompressionError> {
+    fn finalise_encode(&self, _meta: &AlgorithmMeta) -> Result<Vec<u8>, CompressionError> {
         Ok(vec![])
     }
 
-    fn finalise_decode(&self, meta: &AlgorithmMeta) -> Result<Vec<u8>, DecompressionError> {
+    fn finalise_decode(&self, _meta: &AlgorithmMeta) -> Result<Vec<u8>, DecompressionError> {
         Ok(vec![])
     }
 
@@ -35,7 +31,7 @@ impl Algorithm for Gzip {
     fn partial_decode(
         &self,
         data: &[u8],
-        meta: &AlgorithmMeta,
+        _meta: &AlgorithmMeta,
     ) -> Result<Vec<u8>, DecompressionError> {
         let res = inflate::decompress_to_vec(data);
         println!("Partial Decode res: {:?}", res);
