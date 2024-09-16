@@ -82,8 +82,3 @@ pub use crate::compression_level::CompressionLevel;
 ))]
 pub use features::gz::Gzip;
 
-#[cfg(any(
-    feature = "full",
-    feature = "deflate"
-))]pub use features::deflate::Deflate;
-
